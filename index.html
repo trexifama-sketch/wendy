@@ -121,6 +121,7 @@
             -webkit-backdrop-filter: blur(12px);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         /* Color especial para el botón de Ruleta */
@@ -145,12 +146,12 @@
         <div class="shooting-star" style="--rotation: -40deg;"></div>
     </div>
 
-    <div class="main-content">
+    <div class="main-content" id="contenedorMenuPrincipal">
         <h1>Para Wendy 🌌</h1>
         <div class="subtitle">Bienvenida a tu universo</div>
 
         <div class="menu-container">
-            <a href="ruleta.html" class="btn-menu btn-ruleta">🎡 Ruleta de Amor</a>
+            <a href="#" class="btn-menu btn-ruleta" onclick="abrirEscenarioRuleta(event)">🎡 Ruleta de Amor</a>
             
             <a href="#" class="btn-menu">✨ Nuestro Universo</a>
             <a href="#" class="btn-menu">💫 Momentos</a>
@@ -158,5 +159,183 @@
         </div>
     </div>
 
+    <div id="pantallaRuletaAmor" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(to bottom, #090f26, #01030a); z-index: 999999; overflow-y: auto; align-items: center; justify-content: center; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif;">
+        
+        <style>
+            .container-slot-maquina { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 360px; padding: 20px; box-sizing: border-box; }
+            .wrapper-mueble-palanca { position: relative; padding-right: 55px; margin: 0 auto; display: flex; justify-content: center; align-items: center; }
+            .mueble-tragamonedas { width: 250px; background: linear-gradient(135deg, #f7ccd6 0%, #e5a9b7 30%, #be808d 70%, #522d36 100%); border-top: 4px solid #ffffff; border-left: 4px solid #fceef1; border-right: 6px solid #82505b; border-bottom: 16px solid #3d1f26; border-radius: 35px 35px 20px 20px; padding: 16px; box-shadow: 0 35px 70px rgba(0,0,0,0.9), inset 0 4px 8px rgba(255,255,255,0.6); display: flex; flex-direction: column; align-items: center; position: relative; }
+            .marquesina-neon { width: 100%; background: #030712; border: 2.5px solid #00f2ff; border-radius: 22px 22px 10px 10px; padding: 14px 0; margin-bottom: 18px; box-shadow: 0 0 12px rgba(0, 242, 255, 0.5), inset 0 0 12px rgba(0, 242, 255, 0.3); text-align: center; }
+            .texto-neon-slot { margin: 0; font-size: 1.4rem; color: #d1f7ff; font-weight: bold; letter-spacing: 2.5px; text-transform: uppercase; text-shadow: 0 0 4px #fff, 0 0 10px #00f2ff, 0 0 18px #00a8cc; }
+            .subtexto-neon-slot { margin: 4px 0 0 0; font-size: 0.7rem; color: #8ae9ff; letter-spacing: 1.5px; text-transform: uppercase; }
+            .caja-rodillos { width: 100%; height: 95px; background: linear-gradient(180deg, #2b1c20 0%, #170d10 100%); border: 5px solid #754e56; border-radius: 14px; display: flex; justify-content: space-around; align-items: center; box-shadow: inset 0 12px 15px rgba(0,0,0,0.85); overflow: hidden; margin-bottom: 18px; padding: 0 6px; box-sizing: border-box; }
+            .casilla-simbolo { width: 64px; height: 74px; background: linear-gradient(180deg, #ffffff 0%, #eaeaea 50%, #dcdcdc 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 0 6px 10px rgba(0,0,0,0.4); color: #000; }
+            .seccion-inferior-tablero { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+            .pantalla-digital-info { background: #030611; border: 2px solid #00f2ff; border-radius: 12px; padding: 10px 12px; box-shadow: inset 0 3px 8px rgba(0,0,0,0.9); display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; }
+            .mensaje-estado { color: #ffb703; font-size: 0.85rem; font-weight: bold; margin: 0; text-transform: uppercase; text-shadow: 0 0 6px rgba(255, 183, 3, 0.5); }
+            .contador-intentos { color: #ff4d6d; font-size: 0.75rem; font-weight: bold; border-left: 2px solid rgba(0, 242, 255, 0.25); padding-left: 10px; text-align: right; }
+            .bandeja-monedas { width: 75%; height: 32px; background: linear-gradient(180deg, #3d2026, #1a0b0e); border-radius: 0 0 16px 16px; border: 3px solid #6e464f; align-self: center; box-shadow: inset 0 6px 12px rgba(0,0,0,0.7); }
+            .palanca-mecanica { position: absolute; top: 135px; right: 0px; width: 50px; height: 160px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+            .base-anclaje-palanca { position: absolute; bottom: 35px; left: 0; width: 22px; height: 32px; background: linear-gradient(180deg, #5c4348, #302124); border-radius: 0 8px 8px 0; border: 1px solid #705157; }
+            .mástil-palanca { width: 10px; height: 95px; background: linear-gradient(90deg, #c4c4c4 0%, #ffffff 30%, #a6a6a6 70%, #636363 100%); position: absolute; bottom: 54px; left: 6px; transform-origin: bottom center; transition: transform 0.25s; border-radius: 5px; }
+            .bola-palanca { width: 28px; height: 28px; background: radial-gradient(circle at 35% 35%, #ff5c8a 0%, #de0030 60%, #5c0012 100%); border-radius: 50%; position: absolute; top: -22px; left: -9px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); }
+            .palanca-mecanica.active .mástil-palanca { transform: rotateX(85deg) scaleY(0.65); }
+            
+            .overlay-modal-premios { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; z-index: 1000000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+            .overlay-modal-premios.show { opacity: 1; pointer-events: auto; }
+            .caja-alerta-premio { background: linear-gradient(135deg, #ffffff 0%, #fff0f3 100%); border: 3px solid #ffafcc; width: 85%; max-width: 310px; padding: 25px 20px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); text-align: center; position: relative; transform: scale(0.7); transition: transform 0.3s ease; color: #4a0d17; }
+            .caja-alerta-premio.estilo-carta-final { background: #fffcf5; border: 3px solid #d4af37; max-height: 70vh; overflow-y: auto; text-align: left; padding: 30px 22px; }
+            .overlay-modal-premios.show .caja-alerta-premio { transform: scale(1); }
+            .boton-cerrar-x { position: absolute; top: 12px; right: 16px; font-size: 1.3rem; font-weight: bold; color: #ff4d6d; cursor: pointer; user-select: none; z-index: 10; }
+            .titulo-alerta-premio { font-size: 1.2rem; color: #ff4d6d; margin: 0 0 12px 0; font-weight: bold; text-align: center; }
+            .titulo-alerta-premio.color-oro { color: #b38f1d; }
+            .texto-alerta-premio { font-size: 0.95rem; line-height: 1.5; margin: 0; font-weight: 500; white-space: pre-line; }
+            .firma-autor-carta { margin-top: 18px; font-size: 1rem; font-weight: bold; color: #b38f1d; text-align: right; font-style: italic; }
+            .boton-regresar-menu { margin-top: 25px; color: #90e0ef; text-decoration: none; font-size: 0.85rem; border: 1px solid rgba(144, 224, 239, 0.25); padding: 8px 18px; border-radius: 20px; cursor: pointer; background: transparent; display: inline-block; }
+        </style>
+
+        <div class="container-slot-maquina">
+            <div class="wrapper-mueble-palanca">
+                <div class="mueble-tragamonedas">
+                    <div class="marquesina-neon">
+                        <h1 class="texto-neon-slot">Para Wendy</h1>
+                        <p class="subtexto-neon-slot">✨ Universo de Amor ✨</p>
+                    </div>
+                    <div class="caja-rodillos">
+                        <div class="casilla-simbolo" id="slot1">❓</div>
+                        <div class="casilla-simbolo" id="slot2">❓</div>
+                        <div class="casilla-simbolo" id="slot3">❓</div>
+                    </div>
+                    <div class="seccion-inferior-tablero">
+                        <div class="pantalla-digital-info">
+                            <p class="mensaje-estado" id="displayMsg">¡Toca la palanca!</p>
+                            <div class="contador-intentos">INTENTOS<br><span style="font-size: 1.3rem; color: #fff; font-family: monospace;" id="attemptsNum">3</span></div>
+                        </div>
+                        <div class="bandeja-monedas"></div>
+                    </div>
+                </div>
+                <div class="palanca-mecanica" id="interactiveLever" onclick="triggerSlotSpin()">
+                    <div class="base-anclaje-palanca"></div>
+                    <div class="mástil-palanca"><div class="bola-palanca"></div></div>
+                </div>
+            </div>
+            <button class="boton-regresar-menu" onclick="cerrarEscenarioRuleta(event)">⬅ Volver al Menú</button>
+        </div>
+
+        <div class="overlay-modal-premios" id="prizeModal">
+            <div class="caja-alerta-premio" id="modalBox">
+                <span class="boton-cerrar-x" onclick="closeModal()">✕</span>
+                <h3 class="titulo-alerta-premio" id="modalTitle">🏆 ¡Premio Ganado!</h3>
+                <p class="texto-alerta-premio" id="modalText">Texto.</p>
+                <div id="modalSignature" class="firma-autor-carta" style="display: none;">Atentamente: Carlos</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function abrirEscenarioRuleta(event) {
+            if(event) event.preventDefault();
+            document.getElementById('contenedorMenuPrincipal').style.display = 'none';
+            document.getElementById('pantallaRuletaAmor').style.display = 'flex';
+        }
+
+        function cerrarEscenarioRuleta(event) {
+            if(event) event.preventDefault();
+            document.getElementById('pantallaRuletaAmor').style.display = 'none';
+            document.getElementById('contenedorMenuPrincipal').style.display = 'block';
+        }
+
+        const poolItems = ['❤️', '🌌', '✨', '🌹', '🧸'];
+        let remainingAttempts = 3;
+        let runningSpin = false;
+
+        function triggerSlotSpin() {
+            if (runningSpin || remainingAttempts <= 0) return;
+            runningSpin = true;
+
+            const leverObj = document.getElementById('interactiveLever');
+            const displayMsg = document.getElementById('displayMsg');
+            const attemptsNum = document.getElementById('attemptsNum');
+            const s1 = document.getElementById('slot1');
+            const s2 = document.getElementById('slot2');
+            const s3 = document.getElementById('slot3');
+
+            remainingAttempts--;
+            attemptsNum.innerText = remainingAttempts;
+
+            leverObj.classList.add('active');
+            setTimeout(() => { leverObj.classList.remove('active'); }, 250);
+
+            displayMsg.innerText = "PROCESANDO...";
+
+            let cycles = 0;
+            const spinAnimation = setInterval(() => {
+                s1.innerText = poolItems[Math.floor(Math.random() * poolItems.length)];
+                s2.innerText = poolItems[Math.floor(Math.random() * poolItems.length)];
+                s3.innerText = poolItems[Math.floor(Math.random() * poolItems.length)];
+                cycles++;
+
+                if (cycles > 18) {
+                    clearInterval(spinAnimation);
+                    verificarAlgoritmo(s1, s2, s3, displayMsg);
+                }
+            }, 70);
+        }
+
+        function verificarAlgoritmo(s1, s2, s3, displayMsg) {
+            const modalBox = document.getElementById('modalBox');
+            const signature = document.getElementById('modalSignature');
+            signature.style.display = "none";
+
+            if (remainingAttempts === 2) {
+                s1.innerText = "❤️"; s2.innerText = "❤️"; s3.innerText = "✨";
+                displayMsg.innerText = "¡Premio desbloqueado! 🎁";
+                modalBox.classList.remove('estilo-carta-final');
+                showModal("❤️ ¡Felicidades! ❤️", "Te has ganado un gran besito y un gran abrazo para cuando te vea. 🧸");
+            } 
+            else if (remainingAttempts === 1) {
+                s1.innerText = "🧸"; s2.innerText = "🧸"; s3.innerText = "🌹";
+                displayMsg.innerText = "¡Otro premio más! 🍦";
+                modalBox.classList.remove('estilo-carta-final');
+                showModal("🍦 ¡Qué buena suerte! 🍦", "Te has ganado un heladito del que tú quieras y un besito. 🍦✨");
+            } 
+            else if (remainingAttempts === 0) {
+                s1.innerText = "💍"; s2.innerText = "💍"; s3.innerText = "💍";
+                displayMsg.innerText = "🏆 ¡JACKPOT MAYOR! 🎉";
+                modalBox.classList.add('estilo-carta-final');
+                signature.style.display = "block";
+                
+                const textoCarta = "¡Felicidades, mi amor! Has ganado el último premio, mi niña hermosa. ✨\n\n" +
+                                   "Quiero decirte que te quiero muchísimo, mi niña. Eres, sin duda alguna, lo mejor que me ha pasado en la vida y lo mejor que me pasará siempre. No sabría qué hacer sin ti; me encantas por completo, mi Wendy preciosa, mi cielo, mi vida hermosa.\n\n" +
+                                   "Te amo tanto, con todo mi corazoncito, que a veces siento que la realidad misma pierde todo el sentido delante de mi amor por ti. Es un sentimiento tan inmenso que hace que el infinito parezca finito y que los círculos tengan esquinas. Contigo, la lógica deja de tener sentido porque lo que siento rompe cualquier ley del universo; es un amor tan grande que incluso el infinito parece tener límites a tu lado.\n\n" +
+                                   "Quisiera estar contigo para siempre, mi preciosa. Te prometo que, en cuanto te vea, te daré un beso enorme justo donde tú quieras y un gran abrazo de esos que dicen todo lo que siento por ti.\n\n" +
+                                   "Todo esto que estás viendo lo he hecho con muchísimo cariño, exclusivamente para ti. Eres mi mundo entero. ❤️";
+
+                showModal("👑 ¡EL JACKPOT MAYOR, MI CIELO! 👑", textoCarta);
+            }
+        }
+
+        function showModal(title, text) {
+            const modalTitle = document.getElementById('modalTitle');
+            modalTitle.innerText = title;
+            if (remainingAttempts === 0) { modalTitle.classList.add('color-oro'); } else { modalTitle.classList.remove('color-oro'); }
+            document.getElementById('modalText').innerText = text;
+            document.getElementById('prizeModal').classList.add('show');
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const modalOverlay = document.getElementById('prizeModal');
+            if(modalOverlay) {
+                modalOverlay.addEventListener('click', function(e) {
+                    if(e.target === modalOverlay) closeModal();
+                });
+            }
+        });
+
+        function closeModal() {
+            document.getElementById('prizeModal').classList.remove('show');
+            if (remainingAttempts > 0) { runningSpin = false; }
+        }
+    </script>
 </body>
 </html>
