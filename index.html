@@ -5,18 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para Wendy</title>
     <style>
-        /* Fondo espacial: negro azulado */
+        /* Fondo del espacio profundo */
         body {
             margin: 0;
             padding: 0;
-            background-color: #0b132b; /* Azul muy oscuro/negro */
-            background-image: 
-                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
-                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
-                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
-            background-size: 550px 550px, 350px 350px, 250px 250px;
-            background-position: 0 0, 40px 60px, 130px 270px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at center, #101f42 0%, #050b1a 100%);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             color: white;
             display: flex;
             flex-direction: column;
@@ -24,63 +18,123 @@
             justify-content: center;
             min-height: 100vh;
             text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Capa de estrellas parpadeantes */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.3) 1px, transparent 30px),
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(rgba(72, 202, 228, 0.4), transparent 20px);
+            background-size: 300px 300px, 450px 450px, 200px 200px;
+            animation: parpadeo 4s ease-in-out infinite alternate;
+            z-index: 1;
+        }
+
+        @keyframes parpadeo {
+            0% { opacity: 0.5; transform: scale(0.98); }
+            100% { opacity: 1; transform: scale(1.02); }
+        }
+
+        /* Estrella Fugaz */
+        .shooting-star {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,1), transparent);
+            transform: rotate(35deg);
+            animation: fugaz 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes fugaz {
+            0% { top: -10%; left: -10%; opacity: 0; width: 0px; }
+            10% { opacity: 1; width: 120px; }
+            20% { top: 60%; left: 80%; opacity: 0; width: 0px; }
+            100% { top: 60%; left: 80%; opacity: 0; }
+        }
+
+        /* Contenedor principal para que flote sobre el fondo */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
         }
 
         h1 {
-            color: #48cae4; /* Azul clarito brillante */
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(72, 202, 228, 0.6);
+            color: #48cae4;
+            font-size: 2.8rem;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 15px rgba(72, 202, 228, 0.7);
         }
 
-        p {
-            color: #ade8f4;
+        .subtitle {
+            color: #90e0ef;
             font-size: 1.1rem;
             margin-bottom: 40px;
-            padding: 0 20px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 5px rgba(144, 224, 239, 0.3);
         }
 
-        /* Contenedor de los botones */
+        /* Estructura del menú de botones */
         .menu-container {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            width: 80%;
-            max-width: 300px;
+            gap: 18px;
         }
 
-        /* Estilo de los botones */
         .btn-menu {
-            background: linear-gradient(135deg, #0077b6, #00b4d8);
-            color: white;
-            border: none;
-            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #e0f1f7;
+            border: 1px solid rgba(72, 202, 228, 0.3);
+            padding: 16px 20px;
             font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 25px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 180, 216, 0.4);
+            font-weight: 500;
+            border-radius: 15px;
             text-decoration: none;
-            transition: transform 0.2s;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
         }
 
-        /* Efecto al tocar el botón */
+        /* Efecto al presionar el botón en el cel */
         .btn-menu:active {
-            transform: scale(0.95);
+            transform: scale(0.96);
+            background: rgba(72, 202, 228, 0.2);
+            border-color: #48cae4;
+            box-shadow: 0 0 15px rgba(72, 202, 228, 0.5);
         }
     </style>
 </head>
 <body>
 
-    <h1>Para Wendy 🌌</h1>
-    <p>Bienvenida a tu propio universo. Elige una opción:</p>
+    <div class="stars"></div>
+    <div class="shooting-star"></div>
 
-    <div class="menu-container">
-        <a href="#" class="btn-menu">Opción Ejemplo 1</a>
-        <a href="#" class="btn-menu">Opción Ejemplo 2</a>
-        <a href="#" class="btn-menu">Opción Ejemplo 3</a>
+    <div class="main-content">
+        <h1>Para Wendy 🌌</h1>
+        <div class="subtitle">Bienvenida a tu propio pedacito de universo</div>
+
+        <div class="menu-container">
+            <a href="#" class="btn-menu">✨ Sección Uno</a>
+            <a href="#" class="btn-menu">💫 Sección Dos</a>
+            <a href="#" class="btn-menu">🌙 Sección Tres</a>
+        </div>
     </div>
 
 </body>
 </html>
-
