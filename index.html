@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para Wendy 🌌</title>
     <style>
-        /* Fondo Espacial Realista y Estático */
+        /* Fondo de Galaxia Realista con Nebulosas */
         body {
             margin: 0;
             padding: 0;
-            background: radial-gradient(circle at center, #0a1128 0%, #000205 100%);
+            /* Mezcla de colores cósmicos: negro, azul profundo, violeta y destellos celestes */
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(72, 202, 228, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(114, 9, 183, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at center, #0a1128 0%, #020514 100%);
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             color: white;
             display: flex;
@@ -18,11 +22,11 @@
             justify-content: center;
             min-height: 100vh;
             text-align: center;
-            overflow: hidden; /* Evita cualquier movimiento de pantalla */
+            overflow: hidden;
             position: relative;
         }
 
-        /* Capas de estrellas realistas (Parpadeo suave) */
+        /* Capas de estrellas con parpadeo realista */
         .stars-container {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -31,50 +35,70 @@
 
         .stars {
             position: absolute;
-            background-image: 
-                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
-                radial-gradient(1.5px 1.5px at 40px 70px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0));
+            width: 100%;
+            height: 100%;
             background-repeat: repeat;
-            background-size: 200px 200px;
             opacity: 0;
-            animation: starsParpadeo 5s infinite;
+            animation: starsParpadeo 4s infinite alternate;
         }
 
-        .stars.layer1 { animation-delay: 0s; background-size: 150px 150px; }
-        .stars.layer2 { animation-delay: 1s; background-size: 250px 250px; radial-gradient(white, rgba(255,255,255,.1) 1px, transparent 30px); }
-        .stars.layer3 { animation-delay: 2.5s; background-size: 200px 200px; }
+        /* Capa 1: Estrellas pequeñas y tenues */
+        .stars.layer1 {
+            background-image: 
+                radial-gradient(1px 1px at 25px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 75px 120px, rgba(255,255,255,0.7), rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 180px 90px, #fff, rgba(0,0,0,0));
+            background-size: 200px 200px;
+            animation-delay: 0s;
+        }
+
+        /* Capa 2: Estrellas medianas y brillantes en azul/blanco */
+        .stars.layer2 {
+            background-image: 
+                radial-gradient(2px 2px at 50px 160px, #90e0ef, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 130px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 220px, #48cae4, rgba(0,0,0,0));
+            background-size: 250px 250px;
+            animation-delay: 1.5s;
+        }
+
+        /* Capa 3: Cúmulos de polvo estelar brillante */
+        .stars.layer3 {
+            background-image: 
+                radial-gradient(1px 1px at 30px 80px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 150px 170px, rgba(114, 9, 183, 0.4), rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 220px 30px, #fff, rgba(0,0,0,0));
+            background-size: 180px 180px;
+            animation-delay: 2.8s;
+        }
 
         @keyframes starsParpadeo {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.7; }
+            0% { opacity: 0.3; }
+            100% { opacity: 0.85; }
         }
 
-        /* Estrella Fugaz Aleatoria y Delicada */
+        /* Estrellas Fugaces sutiles y rápidas */
         .shooting-star {
             position: absolute;
-            background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(90deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%);
             width: 1px;
-            height: 80px; /* Más fina y larga */
+            height: 70px;
             opacity: 0;
             z-index: 2;
-            animation: shootingStar 20s infinite; /* Aparece cada 20s */
+            animation: shootingStar 18s infinite;
         }
 
-        /* Posiciones aleatorias simuladas con delays y keyframes complejos */
-        .shooting-star:nth-child(1) { top: 10%; left: 10%; animation-delay: 2s; transform: rotate(35deg); }
-        .shooting-star:nth-child(2) { top: 30%; left: 60%; animation-delay: 8s; transform: rotate(-45deg); height: 60px; }
-        .shooting-star:nth-child(3) { top: 70%; left: 20%; animation-delay: 14s; transform: rotate(20deg); height: 100px; }
+        .shooting-star:nth-child(1) { top: 15%; left: 10%; animation-delay: 3s; transform: rotate(35deg); }
+        .shooting-star:nth-child(2) { top: 40%; left: 65%; animation-delay: 9s; transform: rotate(-40deg); height: 50px; }
 
         @keyframes shootingStar {
             0% { opacity: 0; transform: translateY(0) rotate(var(--rotation)); width: 0px; }
             1% { opacity: 1; width: 1px; }
-            3% { opacity: 0; transform: translateY(300px) rotate(var(--rotation)); width: 0px; }
+            3% { opacity: 0; transform: translateY(200px) rotate(var(--rotation)); width: 0px; }
             100% { opacity: 0; }
         }
 
-        /* Contenido Principal (Fijo) */
+        /* Contenido Principal */
         .main-content {
             position: relative;
             z-index: 10;
@@ -85,48 +109,47 @@
 
         h1 {
             color: #48cae4;
-            font-size: 3rem;
+            font-size: 2.8rem;
             margin-bottom: 5px;
-            text-shadow: 0 0 20px rgba(72, 202, 228, 0.8);
+            text-shadow: 0 0 20px rgba(72, 202, 228, 0.6);
         }
 
         .subtitle {
             color: #90e0ef;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 40px;
             font-weight: 300;
+            text-shadow: 0 0 10px rgba(144, 224, 239, 0.2);
         }
 
-        /* Menú de Botones Estilo Vidrio (Como en la imagen) */
+        /* Menú de Botones Estilo Vidrio Flotante */
         .menu-container {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 18px;
         }
 
         .btn-menu {
             background: rgba(255, 255, 255, 0.03);
             color: #e0f1f7;
-            border: 1px solid rgba(72, 202, 228, 0.2);
+            border: 1px solid rgba(72, 202, 228, 0.25);
             padding: 18px 25px;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 500;
             border-radius: 20px;
             text-decoration: none;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
 
-        /* Efecto de brillo sutil al tocar */
+        /* Efecto al presionar en celular */
         .btn-menu:active {
-            transform: scale(0.97);
+            transform: scale(0.96);
             background: rgba(72, 202, 228, 0.15);
             border-color: rgba(72, 202, 228, 0.6);
-            box-shadow: 0 0 20px rgba(72, 202, 228, 0.4);
+            box-shadow: 0 0 15px rgba(72, 202, 228, 0.4);
         }
     </style>
 </head>
@@ -137,8 +160,7 @@
         <div class="stars layer2"></div>
         <div class="stars layer3"></div>
         <div class="shooting-star" style="--rotation: 35deg;"></div>
-        <div class="shooting-star" style="--rotation: -45deg;"></div>
-        <div class="shooting-star" style="--rotation: 20deg;"></div>
+        <div class="shooting-star" style="--rotation: -40deg;"></div>
     </div>
 
     <div class="main-content">
