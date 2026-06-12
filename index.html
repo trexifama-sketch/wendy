@@ -1,1 +1,86 @@
-<h1>Hola Wendy</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Wendy</title>
+    <style>
+        /* Fondo espacial: negro azulado */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0b132b; /* Azul muy oscuro/negro */
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            color: #48cae4; /* Azul clarito brillante */
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(72, 202, 228, 0.6);
+        }
+
+        p {
+            color: #ade8f4;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+        /* Contenedor de los botones */
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        /* Estilo de los botones */
+        .btn-menu {
+            background: linear-gradient(135deg, #0077b6, #00b4d8);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 180, 216, 0.4);
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        /* Efecto al tocar el botón */
+        .btn-menu:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Para Wendy 🌌</h1>
+    <p>Bienvenida a tu propio universo. Elige una opción:</p>
+
+    <div class="menu-container">
+        <a href="#" class="btn-menu">Opción Ejemplo 1</a>
+        <a href="#" class="btn-menu">Opción Ejemplo 2</a>
+        <a href="#" class="btn-menu">Opción Ejemplo 3</a>
+    </div>
+
+</body>
+</html>
+
