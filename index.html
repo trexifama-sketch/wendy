@@ -9,7 +9,6 @@
         body {
             margin: 0;
             padding: 0;
-            /* Mezcla de colores cósmicos: negro, azul profundo, violeta y destellos celestes */
             background: 
                 radial-gradient(circle at 20% 30%, rgba(72, 202, 228, 0.15) 0%, transparent 40%),
                 radial-gradient(circle at 80% 70%, rgba(114, 9, 183, 0.2) 0%, transparent 50%),
@@ -42,34 +41,15 @@
             animation: starsParpadeo 4s infinite alternate;
         }
 
-        /* Capa 1: Estrellas pequeñas y tenues */
         .stars.layer1 {
-            background-image: 
-                radial-gradient(1px 1px at 25px 40px, #fff, rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 75px 120px, rgba(255,255,255,0.7), rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 180px 90px, #fff, rgba(0,0,0,0));
+            background-image: radial-gradient(1px 1px at 25px 40px, #fff, rgba(0,0,0,0)), radial-gradient(1px 1px at 75px 120px, rgba(255,255,255,0.7), rgba(0,0,0,0));
             background-size: 200px 200px;
-            animation-delay: 0s;
         }
 
-        /* Capa 2: Estrellas medianas y brillantes en azul/blanco */
         .stars.layer2 {
-            background-image: 
-                radial-gradient(2px 2px at 50px 160px, #90e0ef, rgba(0,0,0,0)),
-                radial-gradient(1.5px 1.5px at 130px 40px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 90px 220px, #48cae4, rgba(0,0,0,0));
+            background-image: radial-gradient(2px 2px at 50px 160px, #90e0ef, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 130px 40px, #fff, rgba(0,0,0,0));
             background-size: 250px 250px;
             animation-delay: 1.5s;
-        }
-
-        /* Capa 3: Cúmulos de polvo estelar brillante */
-        .stars.layer3 {
-            background-image: 
-                radial-gradient(1px 1px at 30px 80px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 150px 170px, rgba(114, 9, 183, 0.4), rgba(0,0,0,0)),
-                radial-gradient(1.5px 1.5px at 220px 30px, #fff, rgba(0,0,0,0));
-            background-size: 180px 180px;
-            animation-delay: 2.8s;
         }
 
         @keyframes starsParpadeo {
@@ -77,7 +57,7 @@
             100% { opacity: 0.85; }
         }
 
-        /* Estrellas Fugaces sutiles y rápidas */
+        /* Estrellas Fugaces sutiles */
         .shooting-star {
             position: absolute;
             background: linear-gradient(90deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%);
@@ -89,7 +69,7 @@
         }
 
         .shooting-star:nth-child(1) { top: 15%; left: 10%; animation-delay: 3s; transform: rotate(35deg); }
-        .shooting-star:nth-child(2) { top: 40%; left: 65%; animation-delay: 9s; transform: rotate(-40deg); height: 50px; }
+        .shooting-star:nth-child(2) { top: 40%; left: 65%; animation-delay: 9s; transform: rotate(-40deg); }
 
         @keyframes shootingStar {
             0% { opacity: 0; transform: translateY(0) rotate(var(--rotation)); width: 0px; }
@@ -117,39 +97,42 @@
         .subtitle {
             color: #90e0ef;
             font-size: 1.1rem;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             font-weight: 300;
-            text-shadow: 0 0 10px rgba(144, 224, 239, 0.2);
         }
 
         /* Menú de Botones Estilo Vidrio Flotante */
         .menu-container {
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 15px;
         }
 
         .btn-menu {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             color: #e0f1f7;
-            border: 1px solid rgba(72, 202, 228, 0.25);
-            padding: 18px 25px;
-            font-size: 1.15rem;
+            border: 1px solid rgba(72, 202, 228, 0.3);
+            padding: 16px 20px;
+            font-size: 1.1rem;
             font-weight: 500;
             border-radius: 20px;
             text-decoration: none;
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
         }
 
-        /* Efecto al presionar en celular */
+        /* Color especial para el botón de Ruleta */
+        .btn-ruleta {
+            background: rgba(114, 9, 183, 0.15); /* Un toque violeta cósmico */
+            border-color: rgba(181, 23, 158, 0.5);
+            box-shadow: 0 0 15px rgba(181, 23, 158, 0.3);
+        }
+
         .btn-menu:active {
             transform: scale(0.96);
-            background: rgba(72, 202, 228, 0.15);
-            border-color: rgba(72, 202, 228, 0.6);
-            box-shadow: 0 0 15px rgba(72, 202, 228, 0.4);
+            background: rgba(72, 202, 228, 0.2);
         }
     </style>
 </head>
@@ -158,19 +141,20 @@
     <div class="stars-container">
         <div class="stars layer1"></div>
         <div class="stars layer2"></div>
-        <div class="stars layer3"></div>
         <div class="shooting-star" style="--rotation: 35deg;"></div>
         <div class="shooting-star" style="--rotation: -40deg;"></div>
     </div>
 
     <div class="main-content">
         <h1>Para Wendy 🌌</h1>
-        <div class="subtitle">Tu propio pedacito de universo</div>
+        <div class="subtitle">Bienvenida a tu universo</div>
 
         <div class="menu-container">
-            <a href="#" class="btn-menu">✨ Nuestro Universo de Amor</a>
-            <a href="#" class="btn-menu">💫 Momentos y Recuerdos</a>
-            <a href="#" class="btn-menu">🌙 Mensajes para Ti</a>
+            <a href="ruleta.html" class="btn-menu btn-ruleta">🎡 Ruleta de Amor</a>
+            
+            <a href="#" class="btn-menu">✨ Nuestro Universo</a>
+            <a href="#" class="btn-menu">💫 Momentos</a>
+            <a href="#" class="btn-menu">🌙 Mensajes</a>
         </div>
     </div>
 
